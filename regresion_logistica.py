@@ -13,7 +13,7 @@ from sklearn.metrics import explained_variance_score, mean_squared_error, confus
 columns = ["Sample code number","Clump Thickness","Uniformity of Cell Size",
             "Uniformity of Cell Shape", "Marginal Adhesion", "Single Epithelial Cell Size", 
             "Bare Nuclei","Bland Chromatin","Normal Nucleoli","Mitoses", "Class"]
-df = pd.read_csv(r"C:\Users\gerar\Downloads\breast-cancer-wisconsin.data", encoding='utf-8', names = columns)
+df = pd.read_csv(r"C:\Users\gerar\Downloads\breast-cancer-wisconsin.data", encoding='utf-8', names = columns)  #1,7, ult
 
 df.drop(columns=['Sample code number','Bare Nuclei'], inplace=True)
 
@@ -23,7 +23,7 @@ df_x = df[["Clump Thickness","Uniformity of Cell Size","Uniformity of Cell Shape
 
 df_y = df["Class"]
 
-Xtrain, Xtest, ytrain, ytest = train_test_split(df_x, df_y,random_state=1)
+Xtrain, Xtest, ytrain, ytest = train_test_split(df_x.values, df_y.values,random_state=1)
 
 model = LogisticRegression(fit_intercept = True)
 model.fit(Xtrain,ytrain)
@@ -46,5 +46,10 @@ ridgeModel.fit(Xtrain, ytrain)
 pred_yR = ridgeModel.predict(Xtest)
 print(cross_val_score(ridgeModel, df_x, df_y, cv = 10).mean())
 #print(accuracy_score(ytest, pred_yR))
-ytest.values
+
+pred = model.predict([[5,1,1,1,2,3,1,1]])
+print(pred)
+#print([5,1,1,1,2,3,1,1])
+
+
 
